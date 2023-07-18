@@ -4,7 +4,7 @@ namespace HackerNews.Services;
 
 public interface IHackerNewsService
 {
-    Task<IEnumerable<HackerNewsStoryDto>> GetBestStories(int limit);
+    Task<IEnumerable<HackerNewsStoryDto>> GetBestStoriesAsync(int limit);
 }
 
 public class HackerNewsService : IHackerNewsService
@@ -16,9 +16,9 @@ public class HackerNewsService : IHackerNewsService
         _hackerNewsApiClient = hackerNewsApiClient;
     }
     
-    public async Task<IEnumerable<HackerNewsStoryDto>> GetBestStories(int limit)
+    public async Task<IEnumerable<HackerNewsStoryDto>> GetBestStoriesAsync(int limit)
     {
-        var storiesIds = await _hackerNewsApiClient.GetBestStoriesIds();
+        var storiesIds = await _hackerNewsApiClient.GetBestStoriesIdsAsync();
         if (storiesIds == null)
         {
             return Enumerable.Empty<HackerNewsStoryDto>();
@@ -28,7 +28,7 @@ public class HackerNewsService : IHackerNewsService
 
         foreach (var storyId in storiesIds.Take(limit))
         {
-            var story = await _hackerNewsApiClient.GetStory(storyId);
+            var story = await _hackerNewsApiClient.GetStoryAsync(storyId);
             if (story != null)
             {
                 result.Add(story);

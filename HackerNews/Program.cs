@@ -12,7 +12,7 @@ app.AddPostBuildDependencies();
 app.MapGet("stories/best/{limit:int}",
         async (int limit, IHackerNewsService hackerNewsService) =>
         {
-            var stories = await hackerNewsService.GetBestStories(limit);
+            var stories = await hackerNewsService.GetBestStoriesAsync(limit);
 
             return Results.Json(stories, Helpers.DefaultJsonSerializerOptions);
         })

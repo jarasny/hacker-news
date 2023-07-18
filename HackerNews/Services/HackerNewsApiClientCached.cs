@@ -21,18 +21,18 @@ public class HackerNewsApiClientCached : IHackerNewsApiClient
         _settings = settings.Value;
     }
     
-    public async Task<HackerNewsStoryDto?> GetStory(int id)
+    public async Task<HackerNewsStoryDto?> GetStoryAsync(int id)
     {
         return await _cache.GetOrAddAsync(
             id.ToString(), 
-            async () => await _hackerNewsApiClient.GetStory(id),
+            async () => await _hackerNewsApiClient.GetStoryAsync(id),
             TimeSpan.FromSeconds(_settings.StoryCacheExpirationInSeconds));
     }
 
-    public async Task<IEnumerable<int>?> GetBestStoriesIds()
+    public async Task<IEnumerable<int>?> GetBestStoriesIdsAsync()
     {
         return await _cache.GetOrAddAsync(StoriesIdsCacheKey, 
-            async () => await _hackerNewsApiClient.GetBestStoriesIds(),
+            async () => await _hackerNewsApiClient.GetBestStoriesIdsAsync(),
             DateTimeOffset.Now.AddSeconds(_settings.StoriesListCacheExpirationInSeconds));
     }
 }
