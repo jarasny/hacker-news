@@ -9,7 +9,7 @@ var app = builder.Build();
 
 app.AddPostBuildDependencies();
 
-app.MapGet("stories/best/{limit:int}",
+app.MapGet("stories/best",
         async (int limit, IHackerNewsService hackerNewsService) =>
         {
             var stories = await hackerNewsService.GetBestStoriesAsync(limit);

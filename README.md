@@ -18,7 +18,7 @@ docker run -p 8000:80 hacker-news
 
 `Get first n best stories`
 ```
-http://localhost:8000/stories/best/{limit}
+http://localhost:8000/stories/best?limit={limit}
 ```
 
 `Swagger UI`
