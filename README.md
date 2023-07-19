@@ -46,7 +46,6 @@ There are two main resources that are being cached in application:
 ```
 
 ## Enhancements
-* Use more sophisticated method of caching Stories objects, e.g. keeping in cache only Stories that are in current best stories ids list
 * Be aware of hacker News API limitations, running API calls in parallel may result in exceeding bandwidth
 * Use Scrutor to register cache as decorator
 * Add unit tests
