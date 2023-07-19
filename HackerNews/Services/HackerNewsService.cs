@@ -24,7 +24,7 @@ public class HackerNewsService : IHackerNewsService
             return Enumerable.Empty<HackerNewsStoryDto>();
         }
 
-        var tasks = storiesIds.Take(limit).Select(storyId => _hackerNewsApiClient.GetStoryAsync(storyId)).ToList();
+        var tasks = storiesIds.Take(limit).Select(storyId => _hackerNewsApiClient.GetStoryAsync(storyId));
         var result = await Task.WhenAll(tasks);
 
         return result.Where(x => x != null).OrderByDescending(x => x.Score);
