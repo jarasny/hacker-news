@@ -48,6 +48,7 @@ Expiration time is controlled by `StoriesListCacheExpirationInSeconds`. Default 
 
 ## Enhancements
 * Use more sophisticated method of caching Stories objects, e.g. keeping in cache only Stories that are in current best stories ids list
+* Use Scrutor to register cache as decorator
 * Add unit tests
 * Add error handling (e.g. no connection to Hacker News API)
 * Add logging
