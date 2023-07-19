@@ -47,7 +47,6 @@ Expiration time is controlled by `StoriesListCacheExpirationInSeconds`. Default 
 ```
 
 ## Enhancements
-* Use parallel calls to Hacker News API to minimize first load time
 * Use more sophisticated method of caching Stories objects, e.g. keeping in cache only Stories that are in current best stories ids list
 * Add unit tests
 * Add error handling (e.g. no connection to Hacker News API)

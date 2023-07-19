@@ -23,18 +23,10 @@ public class HackerNewsService : IHackerNewsService
         {
             return Enumerable.Empty<HackerNewsStoryDto>();
         }
-        
-        var result = new List<HackerNewsStoryDto>();
 
-        foreach (var storyId in storiesIds.Take(limit))
-        {
-            var story = await _hackerNewsApiClient.GetStoryAsync(storyId);
-            if (story != null)
-            {
-                result.Add(story);
-            }
-        }
-        
-        return result.OrderByDescending(x => x.Score).ToList();
+        var tasks = storiesIds.Take(limit).Select(storyId => _hackerNewsApiClient.GetStoryAsync(storyId)).ToList();
+        var result = await Task.WhenAll(tasks);
+
+        return result.Where(x => x != null).OrderByDescending(x => x.Score);
     }
 }
