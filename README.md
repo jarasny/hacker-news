@@ -31,13 +31,17 @@ http://localhost:8000/swagger
 Application is using simple in-memory caching to avoid too many requests to Hacker News API. Instead of built-in `IMemoryCache`, which has common multi threading issue, `LazyCache` external package was used in applicaton.<br />
 Current solution assumes that there is single instance of application running. Otherwise, if we would like to achieve consistency between many instances, we should apply some Distributed Cache solution like Redis.
 
-There are two main resources that are being cached in application <b>Stories ids</b> and <b>Stories objects</b>. Both are controlled by <b>CacheExpirationInSeconds</b> which describes in seconds how often they are refreshed.
+There are two main resources that are being cached in application:
+* <b>Stories ids</b> - can change over the time, we want to keep as new as posible version but not call Hacker News API every time. Expiration time is controlled by `StoriesListCacheExpirationInSeconds`. Default expiration is 60s absolute time, so the list will be refreshed every 60s.
+
+* <b>Stories objects</b> - only Score and CommentCount are changing over time, so if we want to keep this propeties actual, we should shorten its cache expiration time controlled by `StoryCacheExpirationInSeconds`. Default expiration is 300s absolute time which is 5 minutes, every 5 minutes story is removed from cache and new version is taken from API if needed.
 
 ## Configuration
 ```json
 "HackerNewsSettings": {
   "BaseAddress": "https://hacker-news.firebaseio.com/v0/",
-  "CacheExpirationInSeconds": 60
+  "StoriesListCacheExpirationInSeconds": 60,
+  "StoryCacheExpirationInSeconds": 300
 }
 ```
 

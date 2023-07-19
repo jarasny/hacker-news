@@ -26,13 +26,13 @@ public class HackerNewsApiClientCached : IHackerNewsApiClient
         return await _cache.GetOrAddAsync(
             id.ToString(), 
             async () => await _hackerNewsApiClient.GetStoryAsync(id),
-            DateTimeOffset.Now.AddSeconds(_settings.CacheExpirationInSeconds));
+            DateTimeOffset.Now.AddSeconds(_settings.StoriesListCacheExpirationInSeconds));
     }
 
     public async Task<IEnumerable<int>?> GetBestStoriesIdsAsync()
     {
         return await _cache.GetOrAddAsync(StoriesIdsCacheKey, 
             async () => await _hackerNewsApiClient.GetBestStoriesIdsAsync(),
-            DateTimeOffset.Now.AddSeconds(_settings.CacheExpirationInSeconds));
+            DateTimeOffset.Now.AddSeconds(_settings.StoriesListCacheExpirationInSeconds));
     }
 }
